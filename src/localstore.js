@@ -21,6 +21,7 @@ function setupLocalStore(app, localStore) {
     }
   }
   localStore.setRoot(versionNameKey, newVersionName);
+  localStore.syncRootData();
   localStore.refreshEventData();
 }
 
@@ -82,6 +83,22 @@ export function createLocalStore(options) {
     delete __data__[key];
   }
 
+  function syncRootData() {
+    const keyList = Object.keys(localStorage);
+    const { eventDataKey } = options;
+    keyList.forEach((key) => {
+      if (key === eventDataKey) return;
+      let value;
+      try {
+        value = JSON.parse(localStorage[key]);
+      } catch {
+        value = localStorage[key];
+      } finally {
+        __data__[key] = value;
+      }
+    })
+  }
+
   function set(key, value) {
     const { eventDataKey } = options;
     const skipKey = getPrefixedKey(key);
@@ -125,6 +142,7 @@ export function createLocalStore(options) {
     setRoot,
     getRoot,
     removeRoot,
+    syncRootData,
     set,
     get,
     remove,

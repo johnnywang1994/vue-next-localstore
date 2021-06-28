@@ -67,6 +67,7 @@
     }
 
     localStore.setRoot(versionNameKey, newVersionName);
+    localStore.syncRootData();
     localStore.refreshEventData();
   }
 
@@ -133,6 +134,23 @@
       delete __data__[key];
     }
 
+    function syncRootData() {
+      var keyList = Object.keys(localStorage);
+      var eventDataKey = options.eventDataKey;
+      keyList.forEach(function (key) {
+        if (key === eventDataKey) return;
+        var value;
+
+        try {
+          value = JSON.parse(localStorage[key]);
+        } catch (_unused3) {
+          value = localStorage[key];
+        } finally {
+          __data__[key] = value;
+        }
+      });
+    }
+
     function set(key, value) {
       var eventDataKey = options.eventDataKey;
       var skipKey = getPrefixedKey(key);
@@ -180,6 +198,7 @@
       setRoot: setRoot,
       getRoot: getRoot,
       removeRoot: removeRoot,
+      syncRootData: syncRootData,
       set: set,
       get: get,
       remove: remove,
