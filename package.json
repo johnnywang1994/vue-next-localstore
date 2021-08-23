@@ -5,6 +5,7 @@
   "author": "johnnywang",
   "main": "./dist/vue-localstore.min.js",
   "module": "./dist/vue-localstore.min.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "parcel ./test/index.html",
     "dev": "cross-env NODE_ENV=development rollup --config rollup.config.js -w",
