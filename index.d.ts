@@ -12,11 +12,11 @@ export interface LocalStoreOptions {
 
 export interface LocalStore {
   currentStore: any;
-  getRoot(key: string): string;
+  getRoot(key: string): any;
   setRoot(key: string, value: any): void;
   removeRoot(key: string): void;
   syncRootData(): void;
-  get(key: string): string;
+  get(key: string): any;
   set(key: string, value: any): void;
   remove(key: string): void;
   refreshEventData(): void;
