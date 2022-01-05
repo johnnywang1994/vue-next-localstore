@@ -1,2 +1,1 @@
-export { createLocalStore } from './localstore';
-export * from './useApi';
+export { createLocalStore, useLocalStore } from './localstore';

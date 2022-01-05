@@ -50,6 +50,8 @@
     Object.defineProperty(target, key, options);
   }
 
+  var activeStore;
+
   function setupLocalStore(app, localStore) {
     var options = localStore.options,
         store = localStore.currentStore;
@@ -79,6 +81,7 @@
       }
     });
     app.provide(localStoreKey, localStore);
+    activeStore = localStore;
   }
 
   function createLocalStore(options) {
@@ -230,9 +233,8 @@
     });
     return localStore;
   }
-
   function useLocalStore() {
-    return vue.inject(localStoreKey);
+    return vue.getCurrentInstance() && vue.inject(localStoreKey) || activeStore;
   }
 
   exports.createLocalStore = createLocalStore;

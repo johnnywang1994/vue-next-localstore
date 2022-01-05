@@ -1,4 +1,4 @@
-import { reactive, unref, computed } from 'vue';
+import { reactive, unref, computed, inject, getCurrentInstance } from 'vue';
 import { localStoreKey } from './injectionSymbols';
 import {
   localStorage,
@@ -7,6 +7,8 @@ import {
   ANONYMOUS,
   defineProp,
 } from './utils';
+
+let activeStore;
 
 function setupLocalStore(app, localStore) {
   const { options, currentStore: store } = localStore;
@@ -31,6 +33,7 @@ function applyModalPlugin(app, localStore) {
     get: () => localStore,
   });
   app.provide(localStoreKey, localStore);
+  activeStore = localStore;
 }
 
 export function createLocalStore(options) {
@@ -158,4 +161,8 @@ export function createLocalStore(options) {
   defineProp(localStore, 'data', { get: () => unref(data) });
   defineProp(localStore, '__version__', { get: () => 'v0.0.1' });
   return localStore;
+}
+
+export function useLocalStore() {
+  return (getCurrentInstance() && inject(localStoreKey)) || activeStore;
 }
