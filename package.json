@@ -1,6 +1,6 @@
 {
   "name": "vue-next-localstore",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A tiny plugin for vue localstorage with version control & prefixed keys for vue3",
   "author": "johnnywang",
   "main": "./dist/vue-localstore.min.js",
